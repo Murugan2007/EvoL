@@ -93,6 +93,23 @@ p { margin: 0; }
 .steps h3 { font-size: 1.15rem; margin-bottom: 6px; }
 .steps p { color: var(--mute); font-size: 0.98rem; }
 
+.navjoin { color: var(--red-soft) !important; font-weight: 600; }
+.topic { margin-top: 22px; font-size: 1.3rem; line-height: 1.45; max-width: 30em; }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 22px 28px; margin: 40px 0 0; }
+.facts > div { border-top: 1px solid var(--line); padding-top: 12px; min-width: 0; }
+.facts dt { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--red-soft); font-weight: 500; }
+.facts dd { margin: 6px 0 0; }
+.sub { margin: 52px 0 0; font-size: 1.3rem; font-weight: 500; letter-spacing: -0.01em; }
+.prize { display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: baseline; margin-top: 30px; padding: 20px 22px; border: 1px solid var(--maroon); border-radius: 14px; background: rgba(138, 26, 30, 0.2); max-width: 36em; }
+.prize b { font-weight: 600; }
+.prize span { color: var(--mute); flex: 1 1 240px; min-width: 0; }
+.rules { margin: 20px 0 0; color: var(--mute); max-width: 36em; }
+.faq { margin-top: 18px; max-width: 40em; }
+.faq details { border-top: 1px solid var(--line); padding: 16px 0; }
+.faq details:last-child { border-bottom: 1px solid var(--line); }
+.faq summary { cursor: pointer; font-weight: 500; font-size: 1.05rem; }
+.faq summary:focus-visible { outline: 2px solid var(--red); outline-offset: 4px; border-radius: 4px; }
+.faq details p { margin-top: 10px; color: var(--mute); }
 .price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px; margin-top: 32px; }
 .price strong { font-size: clamp(3.6rem, 11vw, 6rem); font-weight: 300; line-height: 1; letter-spacing: -0.03em; }
 .price s { color: var(--mute); font-size: 1.5rem; }
@@ -138,6 +155,7 @@ footer p { color: var(--mute); font-size: 0.95rem; }
         <a href="#what">What we do</a>
         <a href="#learn">Learn</a>
         <a href="#founder">Founder</a>
+        <a href="https://forms.gle/fZo37zTNhGFYHHED7" target="_blank" rel="noopener" class="navjoin">Register</a>
       </nav>
     </header>
 
@@ -147,7 +165,7 @@ footer p { color: var(--mute); font-size: 0.95rem; }
         <h1>Learn to build. <em>Get things built.</em></h1>
         <p class="lede">Evol is a student-run platform. You can learn electronics, ask a maker to build the thing you wish existed, or buy something small and clever from the person who made it.</p>
         <div class="cta">
-          <a class="btn fill" href="#learn">Join the founding batch</a>
+          <a class="btn fill" href="https://forms.gle/fZo37zTNhGFYHHED7" target="_blank" rel="noopener">Register for the founding batch</a>
           <a class="btn line" href="#what">See what we do</a>
         </div>
       </div>
@@ -210,7 +228,7 @@ footer p { color: var(--mute); font-size: 0.95rem; }
         <div class="rows">
           <div class="row">
             <h3>Learn</h3>
-            <p>Start with the basics of electronics and the software tools around it. Classes are live, small, and taught by people only a few years ahead of you.</p>
+            <p>Start with the basics of electronics and the software tools around it. Classes are live, small, and taught by people who loves what they're doing.</p>
             <span class="tag now">Starting now</span>
           </div>
           <div class="row">
@@ -259,20 +277,58 @@ footer p { color: var(--mute); font-size: 0.95rem; }
       <p class="eyebrow">Learn with us</p>
       <div>
         <h2>The founding batch. Six days, live, and small enough to ask questions.</h2>
+        <p class="topic">Absolute basics of electronics and IoT that even a baby could understand.</p>
         <div class="price" aria-label="Founding price 99 rupees, regular price 199 rupees">
           <strong>₹99</strong>
           <s>₹199</s>
           <span>founding price for the first 100 learners</span>
         </div>
+        <div class="cta">
+          <a class="btn fill" href="https://forms.gle/fZo37zTNhGFYHHED7" target="_blank" rel="noopener">Register now</a>
+          <a class="btn line" href="https://www.linkedin.com/company/evolindia/" target="_blank" rel="noopener">Follow Evol on LinkedIn</a>
+        </div>
+
+        <dl class="facts">
+          <div><dt>Format</dt><dd>Live online classes</dd></div>
+          <div><dt>Length</dt><dd>6 days</dd></div>
+          <div><dt>Seats</dt><dd>Only 100</dd></div>
+          <div><dt>Fee</dt><dd>₹99, paid once</dd></div>
+          <div><dt>Who it is for</dt><dd>Anyone curious. No experience needed.</dd></div>
+          <div><dt>You will need</dt><dd>A phone or laptop with internet</dd></div>
+          <div><dt>Start date and timings</dt><dd>Sent by email when your seat is confirmed</dd></div>
+          <div><dt>Taught by</dt><dd>People who love their work. </dd></div>
+        </dl>
+
+        <h3 class="sub">What you get</h3>
         <ul class="incl">
           <li>Six days of live online classes.</li>
           <li>A free placement cheat sheet to keep.</li>
-          <li>A certificate of completion when you finish a small project.</li>
-          <li>Only 100 seats in this batch.</li>
+          <li>A certificate of completion from Evol.</li>
         </ul>
-        <div class="issuer"><img src="data:image/png;base64,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" alt="" width="36" height="36"><span>Your certificate of completion comes from Evol.</span></div>
+        <div class="prize"><b>Top learner prize</b><span>A free ESP32-C3 SuperMini, a tiny Wi-Fi and Bluetooth board you can build your own IoT projects on.</span></div>
+        <div class="issuer"><img src="data:image/png;base64,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" alt="" width="36" height="36"><span>Certificates are issued by Evol.</span></div>
+
+        <h3 class="sub">How to join</h3>
+        <ol class="steps">
+          <li><h3>Open the form</h3><p>Tap Register now. It takes a few minutes.</p></li>
+          <li><h3>Pay ₹99</h3><p>Use the UPI QR code shown inside the form.</p></li>
+          <li><h3>Send your details</h3><p>Fill in your name, email and payment reference, and attach your screenshot.</p></li>
+          <li><h3>Get your seat</h3><p>We check your payment and confirm your seat by email within 24 hours.</p></li>
+        </ol>
+
+        <h3 class="sub">Good to know</h3>
+        <p class="rules">To get your certificate you need to attend at least 50% of the live classes and complete the coursework project. The ₹99 registration fee is non-refundable once paid, and the form asks you to confirm this before you register.</p>
+
+        <h3 class="sub">Questions</h3>
+        <div class="faq">
+          <details><summary>Do I need to know anything already?</summary><p>No. We start from zero and explain every step in plain words.</p></details>
+          <details><summary>How do I get the certificate?</summary><p>Attend at least 50% of the live classes and finish the coursework project.</p></details>
+          <details><summary>Can I get my money back?</summary><p>No. The ₹99 registration fee is non-refundable once paid, so please read the declaration on the form before you pay.</p></details>
+          <details><summary>Who runs Evol?</summary><p>Evol is a student-run team in Chennai, founded by Murugan U. A co-founder is joining soon.</p></details>
+          <details><summary>I have another question.</summary><p>Message Evol on LinkedIn and we will reply.</p></details>
+        </div>
         <div class="cta">
-          <a class="btn fill" href="https://www.linkedin.com/company/evolindia/" target="_blank" rel="noopener">Follow for the first topic</a>
+          <a class="btn fill" href="https://forms.gle/fZo37zTNhGFYHHED7" target="_blank" rel="noopener">Register now</a>
         </div>
       </div>
     </div>
