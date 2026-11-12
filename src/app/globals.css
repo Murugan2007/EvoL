@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+:root {
+  --evol: #d91f26;        /* buttons + text (4.7:1 on white) */
+  --evol-bright: #ff3131; /* logo red, accents only */
+  --maroon: #7a1519;
+  --space: #0a0406;
+  --ink: #1c1517;
+  --muted: #6f6468;
+  --line: #eee6e7;
+  --tint: #fff4f4;
+}
+
+@theme inline {
+  --color-evol: var(--evol);
+  --color-evol-bright: var(--evol-bright);
+  --color-maroon: var(--maroon);
+  --color-space: var(--space);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-tint: var(--tint);
+  --font-sans: "Outfit Variable", system-ui, sans-serif;
+}
+
+html { background: #fff; }
+body {
+  background: #fff;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-evol px-5 py-3 text-[15px] font-semibold text-white
+           transition active:scale-[.98] disabled:opacity-50 disabled:pointer-events-none;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-line bg-white px-5 py-3 text-[15px]
+           font-semibold text-ink transition active:scale-[.98] disabled:opacity-50;
+  }
+  .btn-sm { @apply px-3.5 py-2 text-sm rounded-lg; }
+  .card { @apply rounded-2xl border border-line bg-white p-4 shadow-[0_1px_2px_rgba(0,0,0,.03)]; }
+  .input {
+    @apply w-full rounded-xl border border-line bg-white px-4 py-3 text-[15px] outline-none
+           focus:border-evol focus:ring-2 focus:ring-evol/15;
+  }
+  .label { @apply mb-1.5 block text-sm font-medium text-ink; }
+  .chip { @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold; }
+}
