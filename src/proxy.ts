@@ -4,6 +4,10 @@ import { NextResponse, type NextRequest } from "next/server";
 // Keeps the login session fresh and sends logged-out visitors away from private pages.
 // The real security is Row Level Security in the database; this is just convenience.
 export async function proxy(request: NextRequest) {
+  // If Supabase isn't configured yet, don't crash every page (pages show a clear message).
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    return NextResponse.next();
+  }
   let response = NextResponse.next({ request });
 
   const supabase = createServerClient(
