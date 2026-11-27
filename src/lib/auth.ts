@@ -5,7 +5,7 @@ export type Profile = {
   id: string;
   email: string | null;
   full_name: string | null;
-  role: "learner" | "admin";
+  role: "learner" | "maker" | "admin";
 };
 
 export async function getProfile(): Promise<Profile | null> {
@@ -25,5 +25,13 @@ export async function requireAdmin(): Promise<Profile> {
   const profile = await getProfile();
   if (!profile) redirect("/login?next=/admin");
   if (profile.role !== "admin") redirect("/");
+  return profile;
+}
+
+/** Makers (and admins) only. */
+export async function requireMaker(): Promise<Profile> {
+  const profile = await getProfile();
+  if (!profile) redirect("/login?next=/maker");
+  if (profile.role === "learner") redirect("/become-a-maker");
   return profile;
 }

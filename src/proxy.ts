@@ -27,7 +27,7 @@ export async function proxy(request: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser();
   const path = request.nextUrl.pathname;
-  const isPrivate = path.startsWith("/admin") || path.startsWith("/register");
+  const isPrivate = path.startsWith("/admin") || path.startsWith("/register") || path.startsWith("/maker") || path.startsWith("/become-a-maker");
 
   if (!user && isPrivate) {
     const url = request.nextUrl.clone();

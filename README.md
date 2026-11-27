@@ -4,7 +4,7 @@ Next.js 16 + Supabase (Postgres, Auth, Storage, RLS) + Vercel. Font: Outfit (Gla
 
 ## One-time setup
 
-1. **Database** — Supabase → SQL Editor → paste `supabase/migrations/0001_init.sql` → Run.
+1. **Database** — Supabase → SQL Editor → run `supabase/migrations/0001_init.sql`, then `0002_makers_market.sql` (in that order).
 2. **Auth** — Supabase → Authentication:
    - URL Configuration: *Site URL* = your Vercel URL; add `https://YOUR-DOMAIN/auth/callback` and `http://localhost:3000/auth/callback` to *Redirect URLs*.
    - Providers → enable **Email** (magic link) and, optionally, **Google**.
@@ -32,3 +32,21 @@ npm run test:db    # 40 security checks on the database rules (no Supabase neede
 ## Company page
 
 The static company page is `public/about.html`, served at `/about` (see `rewrites` in `next.config.ts`).
+
+## Google login (one-time)
+
+1. Google Cloud Console → APIs & Services → **OAuth consent screen** (External) → fill app name "Evol", your email → Publish.
+2. **Credentials → Create credentials → OAuth client ID → Web application.**
+   - Authorized redirect URI: `https://<YOUR-PROJECT-REF>.supabase.co/auth/v1/callback` (shown in Supabase → Authentication → Providers → Google).
+3. Copy the **Client ID** and **Client secret** into Supabase → Authentication → Providers → **Google** → enable → Save.
+4. Supabase → Authentication → URL Configuration: Site URL = your Vercel URL; add `/auth/callback` under Redirect URLs.
+
+## Roles
+
+| Role | How to get it | Sees |
+|---|---|---|
+| learner | default on sign-up | Learn, Marketplace, Request, More |
+| maker | applies at `/become-a-maker`, admin approves at `/admin/makers` | + `/maker` studio (products, customer requests) |
+| admin | SQL: `update public.profiles set role='admin' where email='YOU';` | + `/admin` |
+
+Products go live only after admin approval (`/admin/products`). Checkout is not built yet (needs a payment gateway).

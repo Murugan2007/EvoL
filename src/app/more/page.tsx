@@ -28,8 +28,10 @@ export default async function MorePage() {
           <Row href="/login" title="Sign in" sub="Register, join classes, get your certificate" />
         )}
 
-        {profile?.role === "admin" && <Row href="/admin" title="Admin menu" sub="Payments, batches, learners" dark />}
+        {profile?.role === "admin" && <Row href="/admin" title="Admin menu" sub="Payments, makers, products, batches" dark />}
 
+        {profile && profile.role !== "learner" && <Row href="/maker" title="Maker studio" sub="Your products and customer requests" />}
+        {profile?.role === "learner" && <Row href="/become-a-maker" title="Become a maker" sub="Sell your builds on Evol" />}
         <Row href="/about" title="About Evol" sub="Who we are and what we're building" />
         <Row href="/verify" title="Verify a certificate" sub="Check an Evol certificate ID" />
 

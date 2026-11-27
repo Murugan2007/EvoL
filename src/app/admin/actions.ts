@@ -56,3 +56,28 @@ export async function updateBatch(formData: FormData) {
   revalidatePath("/");
   back("/admin/batches", error?.message);
 }
+
+export async function approveMaker(formData: FormData) {
+  await requireAdmin();
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("approve_maker", { p_id: String(formData.get("id")) });
+  revalidatePath("/admin", "layout");
+  back("/admin/makers", error?.message);
+}
+
+export async function rejectMaker(formData: FormData) {
+  await requireAdmin();
+  const supabase = await createClient();
+  const reason = String(formData.get("reason") ?? "").trim() || "We couldn't approve this application yet.";
+  const { error } = await supabase.rpc("reject_maker", { p_id: String(formData.get("id")), p_reason: reason.slice(0, 300) });
+  revalidatePath("/admin", "layout");
+  back("/admin/makers", error?.message);
+}
+
+export async function reviewProduct(formData: FormData) {
+  await requireAdmin();
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("review_product", { p_id: String(formData.get("id")), p_status: String(formData.get("status")) });
+  revalidatePath("/admin", "layout");
+  back("/admin/products", error?.message);
+}
