@@ -29,6 +29,14 @@ export async function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname;
   const isPrivate = path.startsWith("/admin") || path.startsWith("/register") || path.startsWith("/maker") || path.startsWith("/become-a-maker");
 
+  // New / signed-out visitors opening the app go straight to sign-in.
+  if (!user && path === "/") {
+    const url = request.nextUrl.clone();
+    url.pathname = "/login";
+    url.search = "";
+    return NextResponse.redirect(url);
+  }
+
   if (!user && isPrivate) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
