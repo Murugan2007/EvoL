@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/outfit";
 import "./globals.css";
+import { Splash } from "@/components/Splash";
 
 export const metadata: Metadata = {
   title: { default: "Evol — Make every possibility a reality", template: "%s · Evol" },
@@ -12,7 +13,14 @@ export const viewport: Viewport = { themeColor: "#ffffff", width: "device-width"
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en">
-      <body className="min-h-dvh">{children}</body>
+      <head>
+        {/* If the intro was already seen this session, hide it before first paint (no flash). */}
+        <script dangerouslySetInnerHTML={{ __html: "try{if(sessionStorage.getItem('evol_splash_seen'))document.documentElement.classList.add('no-splash')}catch(e){}" }} />
+      </head>
+      <body className="min-h-dvh">
+        <Splash />
+        {children}
+      </body>
     </html>
   );
 }
