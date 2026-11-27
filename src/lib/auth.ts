@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 
@@ -8,17 +9,23 @@ export type Profile = {
   role: "learner" | "maker" | "admin";
 };
 
-export async function getProfile(): Promise<Profile | null> {
+/**
+ * Who is signed in? Uses getClaims(): the token is verified locally (no network call to Supabase
+ * on projects with asymmetric JWT keys), and cache() shares the result for the whole request.
+ */
+export const getUserId = cache(async (): Promise<string | null> => {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return null;
-  const { data } = await supabase
-    .from("profiles")
-    .select("id,email,full_name,role")
-    .eq("id", user.id)
-    .single();
+  const { data } = await supabase.auth.getClaims();
+  return (data?.claims?.sub as string | undefined) ?? null;
+});
+
+export const getProfile = cache(async (): Promise<Profile | null> => {
+  const id = await getUserId();
+  if (!id) return null;
+  const supabase = await createClient();
+  const { data } = await supabase.from("profiles").select("id,email,full_name,role").eq("id", id).single();
   return (data as Profile) ?? null;
-}
+});
 
 /** Server-side gate for every admin page. (Data is ALSO protected by RLS.) */
 export async function requireAdmin(): Promise<Profile> {

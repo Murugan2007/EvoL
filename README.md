@@ -50,3 +50,9 @@ The static company page is `public/about.html`, served at `/about` (see `rewrite
 | admin | SQL: `update public.profiles set role='admin' where email='YOU';` | + `/admin` |
 
 Products go live only after admin approval (`/admin/products`). Checkout is not built yet (needs a payment gateway).
+
+## Optional env: `NEXT_PUBLIC_SITE_URL`
+Set to `https://evolindia.vercel.app` (your public address). Sign-in then always returns there, never to a protected Vercel deployment URL.
+
+## Speed tips
+Set Vercel → Settings → Functions → **Region** to the one closest to your Supabase project (Supabase → Project Settings → General shows its region, e.g. Mumbai = `bom1`).

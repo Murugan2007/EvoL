@@ -25,7 +25,9 @@ export async function proxy(request: NextRequest) {
     },
   );
 
-  const { data: { user } } = await supabase.auth.getUser();
+  // getClaims() verifies the session token locally and only refreshes it when needed (fast).
+  const { data } = await supabase.auth.getClaims();
+  const user = data?.claims ?? null;
   const path = request.nextUrl.pathname;
   const isPrivate = path.startsWith("/admin") || path.startsWith("/register") || path.startsWith("/maker") || path.startsWith("/become-a-maker");
 

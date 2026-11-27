@@ -31,7 +31,7 @@ export function Splash() {
       aria-hidden="true"
       className={`fixed inset-0 z-[100] flex items-center justify-center bg-[#fe2a29] transition-opacity duration-500 ${fading ? "opacity-0" : "opacity-100"}`}
     >
-      <svg viewBox="100 0 300 215" className="splash-logo w-[min(78vw,420px)]" role="img">
+      <svg viewBox="100 0 300 215" className="splash-logo w-[min(52vw,250px)]" role="img">
         <path className="splash-l" d="M287 3H327V165H403V207H287Z" />
         <g className="splash-text">
           <path transform="translate(91.52 165) scale(0.13966 -0.15190)" d="M60.6995849609375 0V710.80029296875H252.20166015625V0ZM214.401611328125 0V159.9014892578125H597.4013671875V0ZM214.401611328125 284.4993896484375V440.40087890625H560.7012939453125V284.4993896484375ZM214.401611328125 550.8988037109375V710.80029296875H591.5013427734375V550.8988037109375Z"/>

@@ -7,7 +7,12 @@ export function LoginForm({ next }: { next: string }) {
   const [email, setEmail] = useState("");
   const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [msg, setMsg] = useState("");
-  const redirectTo = () => `${location.origin}/auth/callback?next=${encodeURIComponent(next)}`;
+  // Always return to the public site address (never a protected Vercel deployment URL).
+  const siteOrigin = () => {
+    const fixed = process.env.NEXT_PUBLIC_SITE_URL;
+    return fixed && !/localhost|127\.0\.0\.1/.test(location.origin) ? fixed.replace(/\/$/, "") : location.origin;
+  };
+  const redirectTo = () => `${siteOrigin()}/auth/callback?next=${encodeURIComponent(next)}`;
 
   async function google() {
     const { error } = await createClient().auth.signInWithOAuth({

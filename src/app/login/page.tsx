@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Logo } from "@/components/Logo";
-import { createClient } from "@/lib/supabase/server";
+import { getUserId } from "@/lib/auth";
 import { LoginForm } from "./LoginForm";
 
 export const metadata = { title: "Sign in" };
@@ -9,9 +9,7 @@ export const metadata = { title: "Sign in" };
 export default async function LoginPage({ searchParams }: { searchParams: Promise<{ next?: string }> }) {
   const { next } = await searchParams;
   const safeNext = next && next.startsWith("/") && !next.startsWith("//") ? next : "/";
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (user) redirect(safeNext);
+  if (await getUserId()) redirect(safeNext);
   return (
     <main className="mx-auto flex min-h-dvh max-w-sm flex-col justify-center px-6 py-10">
       <Logo size={44} />
