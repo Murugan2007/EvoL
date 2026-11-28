@@ -3,7 +3,7 @@
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "android_app",
-      "package_name": "app.vercel.evolindia.twa",
+      "package_name": "in.evol.app",
       "sha256_cert_fingerprints": ["08:DE:36:01:29:B4:B3:E3:9F:62:BF:47:6D:D5:C3:7D:81:61:1D:DA:96:4C:BF:1B:EE:ED:1F:8D:53:7E:EE:91"]
     }
   }
