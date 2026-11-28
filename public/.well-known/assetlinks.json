@@ -4,7 +4,7 @@
     "target": {
       "namespace": "android_app",
       "package_name": "app.vercel.evolindia.twa",
-      "sha256_cert_fingerprints": ["REPLACE:WITH:YOUR:SHA256:SIGNING:KEY:FINGERPRINT"]
+      "sha256_cert_fingerprints": ["08:DE:36:01:29:B4:B3:E3:9F:62:BF:47:6D:D5:C3:7D:81:61:1D:DA:96:4C:BF:1B:EE:ED:1F:8D:53:7E:EE:91"]
     }
   }
 ]
