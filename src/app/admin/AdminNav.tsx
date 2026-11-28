@@ -10,6 +10,10 @@ const links = [
   { href: "/admin/makers", label: "Makers" },
   { href: "/admin/products", label: "Products" },
   { href: "/admin/learners", label: "Learners" },
+  { href: "/admin/classes", label: "Classes" },
+  { href: "/admin/attendance", label: "Attendance" },
+  { href: "/admin/submissions", label: "Projects" },
+  { href: "/admin/certificates", label: "Certificates" },
 ];
 
 export function AdminNav() {

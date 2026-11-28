@@ -174,6 +174,7 @@ export default async function LearnPage() {
                   <p className="font-bold">🎓 Your certificate is ready</p>
                   <p className="mt-1 font-mono text-sm">{cert.cert_id}</p>
                   <Link href={`/verify/${cert.cert_id}`} className="mt-2 inline-block text-sm font-semibold text-evol">View / share verification page ›</Link>
+                  <Link href={`/certificate/${cert.cert_id}`} className="btn btn-sm mt-3 w-full">Download certificate (PDF)</Link>
                 </>
               ) : (
                 <><p className="font-bold">Certificate</p><p className="mt-1 text-sm text-muted">Attend at least 50% of classes and get your mini project accepted. Your certificate appears here.</p></>

@@ -5,6 +5,7 @@ import { Splash } from "@/components/Splash";
 
 export const metadata: Metadata = {
   title: { default: "Evol — Make every possibility a reality", template: "%s · Evol" },
+  applicationName: "Evol",
   description: "Learn electronics, build real things, and get them made. A student-run maker platform.",
 };
 

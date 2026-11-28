@@ -17,6 +17,9 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
       <p className="mt-2 mb-8 text-muted">Sign in to join the batch, see your classes and collect your certificate.</p>
       <LoginForm next={safeNext} />
       <Link href="/market" className="mt-8 text-center text-sm font-semibold text-muted">Just looking? Browse the marketplace ›</Link>
+      <p className="mt-6 text-center text-xs leading-relaxed text-muted">
+        By continuing you agree to our <Link href="/terms" className="font-semibold underline">Terms</Link> and <Link href="/privacy" className="font-semibold underline">Privacy Policy</Link>.
+      </p>
     </main>
   );
 }

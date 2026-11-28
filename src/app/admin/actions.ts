@@ -81,3 +81,85 @@ export async function reviewProduct(formData: FormData) {
   revalidatePath("/admin", "layout");
   back("/admin/products", error?.message);
 }
+
+// ── classes & attendance ───────────────────────────────────────
+export async function saveClass(formData: FormData) {
+  await requireAdmin();
+  const supabase = await createClient();
+  const when = String(formData.get("starts_at") ?? "");
+  const row = {
+    batch_id: String(formData.get("batch_id")),
+    day_no: Number(formData.get("day_no")),
+    title: String(formData.get("title")).trim(),
+    // the form sends India time; store as an exact instant
+    starts_at: when ? new Date(`${when}:00+05:30`).toISOString() : null,
+    join_link: String(formData.get("join_link") ?? "").trim() || null,
+  };
+  const { error } = await supabase.from("classes").upsert(row, { onConflict: "batch_id,day_no" });
+  revalidatePath("/admin/classes");
+  back("/admin/classes", error?.message);
+}
+
+export async function deleteClass(formData: FormData) {
+  await requireAdmin();
+  const supabase = await createClient();
+  const { error } = await supabase.from("classes").delete().eq("id", String(formData.get("id")));
+  revalidatePath("/admin/classes");
+  back("/admin/classes", error?.message);
+}
+
+/** Mark attendance from checkboxes (all approved learners listed; ticked = present). */
+export async function saveAttendance(formData: FormData) {
+  await requireAdmin();
+  const supabase = await createClient();
+  const classId = String(formData.get("class_id"));
+  const all = formData.getAll("all").map(String);
+  const present = new Set(formData.getAll("present").map(String));
+  const rows = all.map((rid) => ({ class_id: classId, registration_id: rid, attended: present.has(rid) }));
+  const { error } = await supabase.from("attendance").upsert(rows, { onConflict: "class_id,registration_id" });
+  revalidatePath("/admin/attendance");
+  back(`/admin/attendance?class=${classId}`, error?.message);
+}
+
+/** Paste the meeting's participant list; every learner code found (EVxxxx) is marked present. */
+export async function importAttendance(formData: FormData) {
+  await requireAdmin();
+  const supabase = await createClient();
+  const classId = String(formData.get("class_id"));
+  const text = String(formData.get("report") ?? "").toUpperCase();
+  const codes = [...new Set(text.match(/\bEV[A-HJ-NP-Z2-9]{4}\b/g) ?? [])];
+  if (codes.length === 0) back(`/admin/attendance?class=${classId}`, "No learner codes (like EV7K3Q) found in that text.");
+  const { data: regs } = await supabase.from("registrations").select("id,code").in("code", codes).eq("status", "approved");
+  const rows = (regs ?? []).map((r) => ({ class_id: classId, registration_id: r.id, attended: true }));
+  const { error } = rows.length ? await supabase.from("attendance").upsert(rows, { onConflict: "class_id,registration_id" }) : { error: null };
+  revalidatePath("/admin/attendance");
+  back(`/admin/attendance?class=${classId}&done=${rows.length}of${codes.length}`, error?.message);
+}
+
+// ── project reviews ────────────────────────────────────────────
+export async function reviewSubmission(formData: FormData) {
+  await requireAdmin();
+  const supabase = await createClient();
+  const status = String(formData.get("status"));
+  if (!["accepted", "needs_work"].includes(status)) back("/admin/submissions", "Bad status");
+  const { error } = await supabase.from("submissions").update({ status }).eq("id", String(formData.get("id")));
+  revalidatePath("/admin", "layout");
+  back("/admin/submissions", error?.message);
+}
+
+// ── certificates ───────────────────────────────────────────────
+export async function issueCertificate(formData: FormData) {
+  await requireAdmin();
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("issue_certificate", { p_registration_id: String(formData.get("id")) });
+  revalidatePath("/admin", "layout");
+  back("/admin/certificates", error?.message);
+}
+
+export async function revokeCertificate(formData: FormData) {
+  await requireAdmin();
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("revoke_certificate", { p_cert_id: String(formData.get("cert_id")), p_reason: String(formData.get("reason") ?? "").trim() || "Revoked by admin" });
+  revalidatePath("/admin", "layout");
+  back("/admin/certificates", error?.message);
+}

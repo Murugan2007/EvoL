@@ -56,3 +56,10 @@ Set to `https://evolindia.vercel.app` (your public address). Sign-in then always
 
 ## Speed tips
 Set Vercel → Settings → Functions → **Region** to the one closest to your Supabase project (Supabase → Project Settings → General shows its region, e.g. Mumbai = `bom1`).
+
+## Android app (TWA via Bubblewrap)
+Manifest: `src/app/manifest.ts` · icons: `public/icons/` · Digital Asset Links: `public/.well-known/assetlinks.json`
+(edit `package_name` and `sha256_cert_fingerprints` after running `bubblewrap build`).
+
+## Optional env
+`NEXT_PUBLIC_CONTACT_EMAIL` — shown on the Privacy Policy and Terms pages (use a public support address).

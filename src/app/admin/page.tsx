@@ -33,9 +33,10 @@ export default async function AdminHome() {
     { href: "/admin/makers", title: "Makers", sub: "Approve or reject maker applications", live: true },
     { href: "/admin/products", title: "Products", sub: "Review products before they go live in the marketplace", live: true },
     { href: "/admin/learners", title: "Learners", sub: "Approved learners with their unique codes", live: true },
-    { title: "Classes & attendance", sub: "Schedule, join links, 50% attendance tracking", live: false },
-    { title: "Project reviews", sub: "Accept submissions or ask for changes", live: false },
-    { title: "Certificates", sub: "Issue, view and revoke certificates", live: false },
+    { href: "/admin/classes", title: "Classes", sub: "Schedule days and join links", live: true },
+    { href: "/admin/attendance", title: "Attendance", sub: "Paste the meeting report or tick learners; tracks the 50% rule", live: true },
+    { href: "/admin/submissions", title: "Project reviews", sub: "Accept submissions or ask for changes", live: true },
+    { href: "/admin/certificates", title: "Certificates", sub: "Issue when eligible, open, and revoke", live: true },
   ];
 
   return (
