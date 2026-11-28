@@ -163,3 +163,19 @@ export async function revokeCertificate(formData: FormData) {
   revalidatePath("/admin", "layout");
   back("/admin/certificates", error?.message);
 }
+
+export async function issueAllEligible(formData: FormData) {
+  await requireAdmin();
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("issue_all_eligible", { p_batch_id: String(formData.get("batch_id")) });
+  revalidatePath("/admin", "layout");
+  back("/admin/certificates", error?.message);
+}
+
+export async function renameCertificate(formData: FormData) {
+  await requireAdmin();
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("rename_certificate_holder", { p_cert_id: String(formData.get("cert_id")), p_name: String(formData.get("name") ?? "") });
+  revalidatePath("/admin", "layout");
+  back("/admin/certificates", error?.message);
+}

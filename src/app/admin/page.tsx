@@ -36,7 +36,8 @@ export default async function AdminHome() {
     { href: "/admin/classes", title: "Classes", sub: "Schedule days and join links", live: true },
     { href: "/admin/attendance", title: "Attendance", sub: "Paste the meeting report or tick learners; tracks the 50% rule", live: true },
     { href: "/admin/submissions", title: "Project reviews", sub: "Accept submissions or ask for changes", live: true },
-    { href: "/admin/certificates", title: "Certificates", sub: "Issue when eligible, open, and revoke", live: true },
+    { href: "/admin/certificates", title: "Certificates", sub: "Issue to everyone eligible in one tap, open, fix names, revoke", live: true },
+    { href: "/admin/templates", title: "Certificate design", sub: "Upload your certificate PNG and mark where the name goes", live: true },
   ];
 
   return (

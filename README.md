@@ -4,7 +4,7 @@ Next.js 16 + Supabase (Postgres, Auth, Storage, RLS) + Vercel. Font: Outfit (Gla
 
 ## One-time setup
 
-1. **Database** — Supabase → SQL Editor → run `supabase/migrations/0001_init.sql`, then `0002_makers_market.sql` (in that order).
+1. **Database** — Supabase → SQL Editor → run `supabase/migrations/0001_init.sql`, then `0002_makers_market.sql`, `0003_request_kind.sql`, `0004_profile_cert_templates.sql` (in that order).
 2. **Auth** — Supabase → Authentication:
    - URL Configuration: *Site URL* = your Vercel URL; add `https://YOUR-DOMAIN/auth/callback` and `http://localhost:3000/auth/callback` to *Redirect URLs*.
    - Providers → enable **Email** (magic link) and, optionally, **Google**.

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Icon } from "@/components/Icons";
 import { createClient } from "@/lib/supabase/server";
 import { getProfile } from "@/lib/auth";
+import { avatarUrl } from "@/lib/certificate";
 import { signOut } from "../../actions";
 
 export const metadata = { title: "More" };
@@ -37,13 +38,17 @@ export default async function MorePage() {
 
       <section className="space-y-3 px-5 pt-4">
         {profile ? (
-          <div className="flex items-center gap-4 rounded-[22px] border border-line bg-white p-4 shadow-sm">
-            <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#ff4a4a] to-[#c81f26] text-2xl font-bold text-white">{initials || "E"}</span>
-            <div className="min-w-0">
+          <Link href="/profile" className="flex items-center gap-4 rounded-[22px] border border-line bg-white p-4 shadow-sm">
+            {avatarUrl(profile.avatar_path)
+              // eslint-disable-next-line @next/next/no-img-element
+              ? <img src={avatarUrl(profile.avatar_path)!} alt="" className="h-16 w-16 shrink-0 rounded-full object-cover" />
+              : <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#ff4a4a] to-[#c81f26] text-2xl font-bold text-white">{initials || "E"}</span>}
+            <div className="min-w-0 flex-1">
               <p className="truncate text-xl font-bold leading-tight">{name}</p>
               <p className="truncate text-sm text-muted">{reg ? `Founding batch · ${reg.code}` : profile.email}</p>
+              <p className="text-xs font-semibold text-evol">Edit profile ›</p>
             </div>
-          </div>
+          </Link>
         ) : (
           <Link href="/login" className="btn w-full">Sign in</Link>
         )}
@@ -59,7 +64,7 @@ export default async function MorePage() {
         <div className="overflow-hidden rounded-[22px] border border-line bg-white shadow-sm">
           {profile?.role === "admin" && <Row href="/admin" icon="admin" title="Admin menu" dark />}
           {profile && profile.role !== "learner" && <Row href="/maker" icon="tool" title="Maker studio" />}
-          <Row href="/#certificate" icon="award" title="My certificates" />
+          <Row href="/profile#certificates" icon="award" title="My certificates" />
           <Row href="/verify" icon="shield" title="Verify a certificate" />
           <Row href="/request" icon="chat" title="My requests" />
           {profile?.role === "learner" && <Row href="/become-a-maker" icon="tool" title="Become a maker" />}

@@ -14,6 +14,7 @@ const links = [
   { href: "/admin/attendance", label: "Attendance" },
   { href: "/admin/submissions", label: "Projects" },
   { href: "/admin/certificates", label: "Certificates" },
+  { href: "/admin/templates", label: "Cert design" },
 ];
 
 export function AdminNav() {

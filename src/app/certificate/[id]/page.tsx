@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { Logo } from "@/components/Logo";
 import { createClient } from "@/lib/supabase/server";
 import { PrintButton } from "./PrintButton";
+import { CertificateCanvas } from "@/components/CertificateCanvas";
+import { TEMPLATE_COLS, type CertTemplate } from "@/lib/certificate";
 
 export const metadata = { title: "Certificate of Completion", robots: { index: false } };
 
@@ -16,6 +18,15 @@ export default async function CertificatePage({ params }: { params: Promise<{ id
 
   const site = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://evolindia.vercel.app").replace(/\/$/, "");
   const qr = await QRCode.toString(`${site}/verify/${certId}`, { type: "svg", margin: 0, color: { dark: "#7a1519", light: "#0000" } });
+  const { data: tpl } = await supabase.from("certificate_templates").select(TEMPLATE_COLS).eq("is_active", true).maybeSingle();
+  if (tpl) {
+    const qrPng = await QRCode.toDataURL(`${site}/verify/${certId}`, { margin: 1, width: 600, color: { dark: "#000000", light: "#ffffff" } });
+    return (
+      <main className="min-h-dvh bg-[#f4efef] p-4 print:bg-white print:p-0">
+        <CertificateCanvas template={tpl as CertTemplate} name={c.holder_name} certId={certId} qrDataUrl={qrPng} />
+      </main>
+    );
+  }
   const date = new Date(c.issued_on).toLocaleDateString("en-IN", { dateStyle: "long" });
 
   return (

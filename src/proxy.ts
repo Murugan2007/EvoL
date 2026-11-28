@@ -38,7 +38,7 @@ export async function proxy(request: NextRequest) {
   const { data } = await supabase.auth.getClaims();
   const user = data?.claims ?? null;
   const path = request.nextUrl.pathname;
-  const isPrivate = path.startsWith("/admin") || path.startsWith("/register") || path.startsWith("/maker") || path.startsWith("/become-a-maker");
+  const isPrivate = path.startsWith("/admin") || path.startsWith("/register") || path.startsWith("/maker") || path.startsWith("/become-a-maker") || path.startsWith("/profile");
 
   // New / signed-out visitors opening the app go straight to sign-in.
   if (!user && path === "/") {

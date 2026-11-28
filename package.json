@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test:db": "node supabase/tests/rls.test.mjs && node supabase/tests/market.test.mjs"
+    "test:db": "node supabase/tests/rls.test.mjs && node supabase/tests/market.test.mjs && node supabase/tests/profile_certs.test.mjs"
   },
   "dependencies": {
     "@fontsource-variable/outfit": "^5.3.0",

@@ -6,6 +6,7 @@ export type Profile = {
   id: string;
   email: string | null;
   full_name: string | null;
+  avatar_path: string | null;
   role: "learner" | "maker" | "admin";
 };
 
@@ -23,7 +24,7 @@ export const getProfile = cache(async (): Promise<Profile | null> => {
   const id = await getUserId();
   if (!id) return null;
   const supabase = await createClient();
-  const { data } = await supabase.from("profiles").select("id,email,full_name,role").eq("id", id).single();
+  const { data } = await supabase.from("profiles").select("id,email,full_name,avatar_path,role").eq("id", id).single();
   return (data as Profile) ?? null;
 });
 
