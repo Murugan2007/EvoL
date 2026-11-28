@@ -26,12 +26,13 @@ export const templateUrl = (path: string) => `${base()}/storage/v1/object/public
 export const avatarUrl = (path: string | null | undefined) =>
   path ? `${base()}/storage/v1/object/public/avatars/${path}` : null;
 
-export function loadImage(src: string): Promise<HTMLImageElement> {
+export function loadImage(src: string, ms = 20000): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
     const img = new Image();
+    const timer = setTimeout(() => reject(new Error("image timed out")), ms);
     img.crossOrigin = "anonymous"; // lets the canvas export a PNG
-    img.onload = () => resolve(img);
-    img.onerror = () => reject(new Error("image failed to load"));
+    img.onload = () => { clearTimeout(timer); resolve(img); };
+    img.onerror = () => { clearTimeout(timer); reject(new Error("image failed to load")); };
     img.src = src;
   });
 }
@@ -51,7 +52,13 @@ export async function drawCertificate(
   canvas.width = W;
   canvas.height = H;
   const ctx = canvas.getContext("2d")!;
-  try { await document.fonts.load(`${t.name_weight} 40px "Outfit Variable"`, name || "A"); } catch { /* fall back to system font */ }
+  // never let a slow/missing font block the certificate: wait at most 2.5 s, then use the fallback font
+  try {
+    await Promise.race([
+      document.fonts.load(`${t.name_weight} 40px "Outfit Variable"`, name || "A"),
+      new Promise((r) => setTimeout(r, 2500)),
+    ]);
+  } catch { /* fall back to system font */ }
   ctx.drawImage(img, 0, 0, W, H);
 
   // name: centred on (x, y); long names shrink so they never run outside the box
