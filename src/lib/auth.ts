@@ -24,14 +24,17 @@ export const getProfile = cache(async (): Promise<Profile | null> => {
   const id = await getUserId();
   if (!id) return null;
   const supabase = await createClient();
-  const { data } = await supabase.from("profiles").select("id,email,full_name,avatar_path,role").eq("id", id).single();
-  return (data as Profile) ?? null;
+  const full = await supabase.from("profiles").select("id,email,full_name,avatar_path,role").eq("id", id).maybeSingle();
+  if (full.data) return full.data as Profile;
+  // Database not fully migrated yet (avatar_path column missing)? Don't lock people out: read without it.
+  const basic = await supabase.from("profiles").select("id,email,full_name,role").eq("id", id).maybeSingle();
+  return basic.data ? ({ ...basic.data, avatar_path: null } as Profile) : null;
 });
 
 /** Server-side gate for every admin page. (Data is ALSO protected by RLS.) */
 export async function requireAdmin(): Promise<Profile> {
   const profile = await getProfile();
-  if (!profile) redirect("/login?next=/admin");
+  if (!profile) redirect((await getUserId()) ? "/" : "/login?next=/admin"); // signed in but no profile row: avoid a login<->admin loop
   if (profile.role !== "admin") redirect("/");
   return profile;
 }
@@ -39,7 +42,7 @@ export async function requireAdmin(): Promise<Profile> {
 /** Makers (and admins) only. */
 export async function requireMaker(): Promise<Profile> {
   const profile = await getProfile();
-  if (!profile) redirect("/login?next=/maker");
+  if (!profile) redirect((await getUserId()) ? "/" : "/login?next=/maker");
   if (profile.role === "learner") redirect("/become-a-maker");
   return profile;
 }

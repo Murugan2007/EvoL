@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { getProfile } from "@/lib/auth";
+import { getProfile, getUserId } from "@/lib/auth";
 import { ProfileForm } from "./ProfileForm";
 
 export const metadata = { title: "My profile" };
 
 export default async function ProfilePage() {
   const profile = await getProfile();
-  if (!profile) redirect("/login?next=/profile");
+  if (!profile) redirect((await getUserId()) ? "/" : "/login?next=/profile");
   const supabase = await createClient();
   const { data: certs } = await supabase
     .from("certificates")
