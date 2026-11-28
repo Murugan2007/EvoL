@@ -4,6 +4,15 @@ import { NextResponse, type NextRequest } from "next/server";
 // Keeps the login session fresh and sends logged-out visitors away from private pages.
 // The real security is Row Level Security in the database; this is just convenience.
 export async function proxy(request: NextRequest) {
+  // Always use the public address: bounce any other *.vercel.app alias to it.
+  const site = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
+  if (site) {
+    const host = request.headers.get("host") ?? "";
+    if (host.endsWith(".vercel.app") && host !== new URL(site).host) {
+      return NextResponse.redirect(new URL(request.nextUrl.pathname + request.nextUrl.search, site), 308);
+    }
+  }
+
   // If Supabase isn't configured yet, don't crash every page (pages show a clear message).
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
     return NextResponse.next();
